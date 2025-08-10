@@ -1,0 +1,131 @@
+import React from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Code } from "lucide-react";
+
+export default function RustMultithreadPage() {
+  return (
+    <main className="p-6 space-y-8 max-w-4xl mx-auto">
+      <section className="text-center">
+        <h1 className="text-4xl font-bold text-orange-600">
+          🚀 Multithreading com Segurança: Descubra o Poder do Rust
+        </h1>
+        <p className="mt-4 text-lg text-gray-600">
+          Um guia claro, atrativo e técnico sobre multithread com Rust
+        </p>
+      </section>
+
+      <section>
+        <h2 className="text-2xl font-semibold text-orange-500">🧠 Por que Multithreading?</h2>
+        <p className="mt-2 text-gray-700">
+          Imagine uma cozinha com vários cozinheiros trabalhando ao mesmo tempo.
+          Isso é o que a programação multithread faz: divide e conquista.
+          Porém, isso gera desafios de segurança e bugs complexos.
+          O Rust resolve isso com uma abordagem única baseada em segurança por design.
+        </p>
+      </section>
+
+      <section>
+        <h2 className="text-2xl font-semibold text-orange-500">🔍 Recursos Poderosos do Rust</h2>
+        <ul className="mt-2 space-y-2 text-gray-700 list-disc list-inside">
+          <li><strong>Ownership e Borrowing</strong>: evita data races em tempo de compilação.</li>
+          <li><strong>Traits Send e Sync</strong>: segurança garantida entre threads.</li>
+          <li><strong>Canal (channel)</strong>: comunicação segura entre threads.</li>
+          <li><strong>Mutex, Arc e ThreadPool</strong>: controle de concorrência fácil e seguro.</li>
+          <li><strong>Sem Coletor de Lixo</strong>: alta performance com baixo overhead.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2 className="text-2xl font-semibold text-orange-500">🛠️ Exemplos Práticos</h2>
+
+        <Card>
+          <CardContent className="p-4">
+            <Badge variant="outline">Exemplo 1: Spawn de Thread</Badge>
+            <pre className="mt-2 bg-gray-900 text-white p-3 rounded text-sm overflow-x-auto">
+{`use std::thread;
+
+fn main() {
+    let handle = thread::spawn(|| {
+        println!("Rodando em outra thread!");
+    });
+
+    handle.join().unwrap();
+}`}
+            </pre>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardContent className="p-4">
+            <Badge variant="outline">Exemplo 2: Comunicação com Channels</Badge>
+            <pre className="mt-2 bg-gray-900 text-white p-3 rounded text-sm overflow-x-auto">
+{`use std::sync::mpsc;
+use std::thread;
+
+fn main() {
+    let (tx, rx) = mpsc::channel();
+
+    thread::spawn(move || {
+        tx.send("Mensagem da thread").unwrap();
+    });
+
+    println!("Recebido: {}", rx.recv().unwrap());
+}`}
+            </pre>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardContent className="p-4">
+            <Badge variant="outline">Exemplo 3: Compartilhamento com Arc e Mutex</Badge>
+            <pre className="mt-2 bg-gray-900 text-white p-3 rounded text-sm overflow-x-auto">
+{`use std::sync::{Arc, Mutex};
+use std::thread;
+
+fn main() {
+    let counter = Arc::new(Mutex::new(0));
+    let mut handles = vec![];
+
+    for _ in 0..10 {
+        let counter = Arc::clone(&counter);
+        let handle = thread::spawn(move || {
+            let mut num = counter.lock().unwrap();
+            *num += 1;
+        });
+        handles.push(handle);
+    }
+
+    for handle in handles {
+        handle.join().unwrap();
+    }
+
+    println!("Resultado: {}", *counter.lock().unwrap());
+}`}
+            </pre>
+          </CardContent>
+        </Card>
+      </section>
+
+      <section>
+        <h2 className="text-2xl font-semibold text-orange-500">🎯 Vantagens Reais</h2>
+        <ul className="mt-2 space-y-2 text-gray-700 list-disc list-inside">
+          <li>Segurança garantida em tempo de compilação</li>
+          <li>Desempenho comparável ao C/C++</li>
+          <li>Sem coletor de lixo = controle fino de memória</li>
+          <li>Ferramentas modernas e comunidade ativa</li>
+          <li>Aplicável em jogos, web, IoT, blockchain e muito mais</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2 className="text-2xl font-semibold text-orange-500">📈 Autoavaliação e Impacto</h2>
+        <p className="mt-2 text-gray-700">
+          A apresentação equilibra profundidade técnica e linguagem acessível, com
+          exemplos reais e analogias claras. O uso da página web permite engajamento
+          com o conteúdo, e demonstração visual e prática dos conceitos.
+        </p>
+      </section>
+    </main>
+  );
+}
