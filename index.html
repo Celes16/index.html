@@ -15,7 +15,7 @@
       line-height: 1.6;
     }
     h1, h2 {
-      color: #d35400;
+      color: #e91e63; /* rosa */
     }
     h1 {
       font-size: 2.8rem;
@@ -49,8 +49,8 @@
       margin-bottom: 1.5rem;
     }
     .badge-outline {
-      border: 1px solid #d35400;
-      color: #d35400;
+      border: 1px solid #e91e63; /* rosa */
+      color: #e91e63;
       padding: 5px 12px;
       font-weight: 600;
       border-radius: 20px;
@@ -69,7 +69,7 @@
     table caption {
       caption-side: top;
       font-weight: 700;
-      color: #d35400;
+      color: #e91e63; /* rosa */
       font-size: 1.3rem;
       margin-bottom: 0.5rem;
       text-align: left;
@@ -81,7 +81,7 @@
       color: #374151;
     }
     table th {
-      background-color: #dba07e; /* tom de laranja claro para header */
+      background-color: #f48fb1; /* rosa claro */
       color: white;
     }
     table tbody tr:nth-child(even) {
@@ -137,7 +137,7 @@
       </ul>
     </section>
 
-    <!-- Tabela adicionada aqui -->
+    <!-- Tabela -->
     <section>
       <table>
         <caption>Mecanismos de Compartilhamento Seguro</caption>
@@ -189,10 +189,10 @@ fn main() {
 
       <h2>O que acontece aqui?</h2>
       <ul>
-        <li><strong>thread::spawn</strong> cria uma nova thread (linha de execução independente) para rodar o código dentro da closure <code>|| { ... }</code>.</li>
+        <li><strong>thread::spawn</strong> cria uma nova thread para executar o código da closure.</li>
         <li>O retorno (<code>handle</code>) é um <strong>JoinHandle</strong>, que permite aguardar o término dessa thread.</li>
-        <li><code>join()</code> bloqueia a execução da thread principal até que a thread criada termine.</li>
-        <li><code>unwrap()</code> é usado para lidar com erros, por exemplo, se a thread <em>panicar</em> (falhar abruptamente).</li>
+        <li><code>join()</code> bloqueia até que a thread termine.</li>
+        <li><code>unwrap()</code> trata erros caso a thread falhe.</li>
       </ul>
 
       <div class="badge-outline">Exemplo 2: Comunicação com Channels</div>
@@ -212,11 +212,9 @@ fn main() {
       <h2>O que acontece aqui?</h2>
       <ul>
         <li><strong>mpsc::channel()</strong> cria um canal para comunicação entre threads.</li>
-        <li><strong>tx (transmitter):</strong> envia mensagens.</li>
-        <li><strong>rx (receiver):</strong> recebe mensagens.</li>
-        <li><strong>move</strong> na closure garante que <code>tx</code> seja movido para a thread, permitindo que ela envie mensagens.</li>
-        <li><code>send</code> envia um valor pelo canal.</li>
-        <li><code>recv</code> bloqueia até receber algo.</li>
+        <li><strong>tx</strong> envia mensagens, <strong>rx</strong> recebe.</li>
+        <li>O <strong>move</strong> transfere a posse do transmissor para a thread.</li>
+        <li><code>send</code> envia dados, <code>recv</code> aguarda por eles.</li>
       </ul>
 
       <div class="badge-outline">Exemplo 3: Compartilhamento com Arc e Mutex</div>
@@ -244,10 +242,9 @@ fn main() {
 }</code></pre>
       <p><strong>Explicação:</strong></p>
       <ul>
-        <li><strong>Arc</strong> (Atomic Reference Counted) permite compartilhar dados imutáveis ou mutáveis entre threads, garantindo que o dado seja liberado apenas quando ninguém mais estiver usando.</li>
-        <li><strong>Mutex</strong> (Mutual Exclusion) garante que apenas uma thread por vez acesse/modifique o dado.</li>
-        <li><code>counter.lock()</code> bloqueia o mutex, garantindo acesso exclusivo.</li>
-        <li><code>Arc::clone</code> cria mais referências para o mesmo valor de forma segura.</li>
+        <li><strong>Arc</strong> permite compartilhamento seguro entre threads.</li>
+        <li><strong>Mutex</strong> garante acesso exclusivo a um recurso.</li>
+        <li><code>lock()</code> bloqueia o acesso até liberar.</li>
       </ul>
     </section>
 
@@ -263,12 +260,31 @@ fn main() {
     </section>
 
     <section>
-      <h2>📈 Autoavaliação e Impacto</h2>
-      <p>
-        A apresentação equilibra profundidade técnica e linguagem acessível, com
-        exemplos reais e analogias claras. O uso da página web permite engajamento
-        com o conteúdo, e demonstração visual e prática dos conceitos.
-      </p>
+      <h2>🤖 Rust em Machine Learning</h2>
+      <p>Rust também vem conquistando espaço em computação científica e inteligência artificial. A linguagem oferece bibliotecas que tornam viável o desenvolvimento de soluções de alto desempenho, incluindo:</p>
+      <ul>
+        <li><strong>ndarray</strong>: manipulação de arrays multidimensionais.</li>
+        <li><strong>statrs</strong>: estatística e análise numérica.</li>
+        <li><strong>polars</strong>: DataFrame rápido e otimizado, similar ao Pandas.</li>
+        <li><strong>datafusion</strong>: engine de processamento de dados com SQL e DataFrames.</li>
+        <li><strong>tch-rs</strong>: binding para o PyTorch, permitindo deep learning em Rust.</li>
+      </ul>
+      <p>Apesar de exigir mais esforço de aprendizado que Python ou R, Rust pode ser uma excelente escolha para quem busca segurança de memória, paralelismo eficiente e performance bruta no processamento de dados.</p>
+    </section>
+
+    <section>
+      <h2>⚙️ Instalação do Rust</h2>
+      <p>Para começar a programar em Rust, instale o compilador e o gerenciador de pacotes:</p>
+      <h3>Linux/macOS</h3>
+      <pre><code>curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+source $HOME/.cargo/env</code></pre>
+
+      <h3>Windows</h3>
+      <p>Baixe e execute o <a href="https://win.rustup.rs/" target="_blank">rustup-init.exe</a></p>
+
+      <h3>Verifique a instalação</h3>
+      <pre><code>rustc --version
+cargo --version</code></pre>
     </section>
   </main>
 </body>
