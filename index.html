@@ -111,12 +111,28 @@
 </head>
 <body>
   <main>
-    <section style="text-align:center;">
-      <h1>Multithreading com Segurança: Descubra o Poder do Rust</h1>
+    <!-- Nova seção: Introdução geral sobre Rust -->
+    <section>
+      <h2>Introdução ao Rust</h2>
+      <p>
+        Rust é uma linguagem de programação moderna, lançada oficialmente em 2015 pela Mozilla,
+        com o objetivo de unir <strong>desempenho de baixo nível</strong> e <strong>segurança de alto nível</strong>.
+        Seu sistema inovador de <em>ownership</em> e <em>borrowing</em> previne falhas comuns,
+        como ponteiros nulos e <em>data races</em>, já na fase de compilação,
+        garantindo código robusto sem sacrificar velocidade.
+      </p>
+      <p>
+        Além de aplicações em <strong>sistemas críticos</strong> e <strong>programação multithread</strong>,
+        Rust também vem ganhando espaço em <strong>sistemas embarcados</strong>,
+        <strong>ferramentas de linha de comando (CLI)</strong>, <strong>WebAssembly</strong>,
+        <strong>desenvolvimento de jogos</strong> e <strong>machine learning</strong>.
+        Essa versatilidade, aliada a uma comunidade ativa e em crescimento,
+        faz do Rust uma das linguagens mais admiradas e promissoras da atualidade.
+      </p>
     </section>
 
     <section>
-      <h2>Por que Multithreading?</h2>
+      <h2> E Por que Multithreading?</h2>
       <p>
         Imagine uma cozinha com vários cozinheiros trabalhando ao mesmo tempo.
         Isso é o que a programação multithread faz: divide e conquista.
@@ -136,7 +152,6 @@
       </ul>
     </section>
 
-    <!-- Tabela -->
     <section>
       <table>
         <caption>Mecanismos de Compartilhamento Seguro</caption>
@@ -175,22 +190,26 @@
     <section>
       <h2>🛠️ Exemplos Práticos</h2>
 
-      <div class="badge-outline">Exemplo 1: Spawn de Thread</div>
+      <div class="badge-outline">Exemplo 1: Spawn de Thread com Ownership</div>
       <pre><code>use std::thread;
 
 fn main() {
-    let handle = thread::spawn(|| {
-        println!("Rodando em outra thread!");
+    let cozinha = String::from("cozinha");
+    let handle = thread::spawn(move || {
+        // Imagine vários cozinheiros trabalhando juntos, 
+        // cada um com sua responsabilidade para evitar confusão.
+        println!("Trabalhando na {}", cozinha);
     });
 
     handle.join().unwrap();
 }</code></pre>
 
-      <h2>O que acontece aqui?</h2>
+      <h3>O que acontece aqui?</h3>
       <ul>
         <li><strong>thread::spawn</strong> cria uma nova thread para executar o código da closure.</li>
-        <li>O retorno (<code>handle</code>) é um <strong>JoinHandle</strong>, que permite aguardar o término dessa thread.</li>
-        <li><code>join()</code> bloqueia até que a thread termine.</li>
+        <li>A palavra <code>move</code> transfere a posse da variável <code>cozinha</code> para a thread, evitando conflitos.</li>
+        <li>Assim como numa cozinha com vários chefs, cada um deve ter seu espaço e responsabilidade para que tudo funcione sem problemas.</li>
+        <li><code>join()</code> bloqueia até que a thread termine sua execução.</li>
         <li><code>unwrap()</code> trata erros caso a thread falhe.</li>
       </ul>
 
@@ -208,7 +227,7 @@ fn main() {
     println!("Recebido: {}", rx.recv().unwrap());
 }</code></pre>
 
-      <h2>O que acontece aqui?</h2>
+      <h3>O que acontece aqui?</h3>
       <ul>
         <li><strong>mpsc::channel()</strong> cria um canal para comunicação entre threads.</li>
         <li><strong>tx</strong> envia mensagens, <strong>rx</strong> recebe.</li>
@@ -239,20 +258,22 @@ fn main() {
 
     println!("Resultado: {}", *counter.lock().unwrap());
 }</code></pre>
-      <p><strong>Explicação:</strong></p>
+
+      <h3>O que acontece aqui?</h3>
       <ul>
-        <li><strong>Arc</strong> permite compartilhamento seguro entre threads.</li>
-        <li><strong>Mutex</strong> garante acesso exclusivo a um recurso.</li>
-        <li><code>lock()</code> bloqueia o acesso até liberar.</li>
+        <li><strong>Arc</strong> (Atomic Reference Counted) permite compartilhar dados entre threads sem risco.</li>
+        <li><strong>Mutex</strong> garante que apenas uma thread modifique os dados por vez, evitando conflitos.</li>
+        <li><code>lock()</code> bloqueia o acesso até liberar o recurso.</li>
+        <li><code>Arc::clone</code> cria referências seguras para múltiplas threads.</li>
       </ul>
     </section>
 
     <section>
-      <h2>🎯 Vantagens Reais</h2>
+      <h2> Vantagens Rust </h2>
       <ul>
         <li>Segurança garantida em tempo de compilação</li>
         <li>Desempenho comparável ao C/C++</li>
-        <li>Sem coletor de lixo = controle fino de memória</li>
+        <li>Sem coletor de lixo (GC) = controle fino de memória</li>
         <li>Ferramentas modernas e comunidade ativa</li>
         <li>Aplicável em jogos, web, IoT, blockchain e muito mais</li>
       </ul>
@@ -279,12 +300,13 @@ fn main() {
 source $HOME/.cargo/env</code></pre>
 
       <h3>Windows</h3>
-      <p>Baixe e execute o <a href="https://win.rustup.rs/" target="_blank">rustup-init.exe</a></p>
+      <p>Baixe e execute o <a href="https://win.rustup.rs/" target="_blank" rel="noopener noreferrer">rustup-init.exe</a></p>
 
       <h3>Verifique a instalação</h3>
       <pre><code>rustc --version
 cargo --version</code></pre>
     </section>
+
   </main>
 </body>
 </html>
